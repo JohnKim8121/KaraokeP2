@@ -252,6 +252,9 @@ input[type="range"] {
     padding: 10px;
     border-bottom: 1px solid #eee;
     transition: background-color 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .history-entry:hover {
@@ -268,4 +271,23 @@ input[type="range"] {
     justify-content: space-between;
     color: #666;
     font-size: 0.9em;
+}
+
+/* Delete button styles */
+.delete-score {
+    cursor: pointer;
+    color: #dc3545;
+    padding: 5px;
+    transition: color 0.2s;
+}
+
+.delete-score:hover {
+    color: #bd2130;
+}
+
+/* Fixed height for modal score history */
+#scoreHistory {
+    max-height: 200px;
+    overflow-y: auto;
+    margin: 10px 0;
 } 
