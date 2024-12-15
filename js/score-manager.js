@@ -9,6 +9,48 @@ class ScoreManager {
         };
         this.loadScoreHistory();
         this.updateLiveHistory();
+        this.setupEventListeners();
+    }
+
+    setupEventListeners() {
+        // Delegate event listener for delete buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('delete-score')) {
+                const scoreId = e.target.dataset.scoreId;
+                this.deleteScore(scoreId);
+            }
+        });
+    }
+
+    deleteScore(scoreId) {
+        const scores = this.loadScoreHistory();
+        const updatedScores = scores.filter((_, index) => index !== parseInt(scoreId));
+        localStorage.setItem('scoreHistory', JSON.stringify(updatedScores));
+        this.updateLiveHistory();
+        this.updateModalHistory();
+    }
+
+    updateModalHistory() {
+        const scoreHistory = document.getElementById('scoreHistory');
+        if (!scoreHistory) return;
+
+        const scores = this.loadScoreHistory();
+        scoreHistory.innerHTML = scores
+            .map((s, index) => `
+                <div class="score-entry">
+                    <div class="score-info">
+                        <strong>${s.videoTitle}</strong>
+                        <div class="score-details">
+                            <span>Score: ${s.finalScore}%</span>
+                            <span>Accuracy: ${s.averageAccuracy}%</span>
+                        </div>
+                    </div>
+                    <div class="score-date">
+                        ${new Date(s.date).toLocaleDateString()}
+                        <span class="delete-score" data-score-id="${index}">🗑️</span>
+                    </div>
+                </div>
+            `).join('');
     }
 
     startNewSession(videoId, videoTitle) {
@@ -74,13 +116,16 @@ class ScoreManager {
 
         const scores = this.loadScoreHistory();
         historyPanel.innerHTML = scores
-            .map(s => `
+            .map((s, index) => `
                 <div class="history-entry">
-                    <div class="song-title">${s.videoTitle}</div>
-                    <div class="score-info">
-                        <span>Score: ${s.finalScore}%</span>
-                        <span>Accuracy: ${s.averageAccuracy}%</span>
+                    <div>
+                        <div class="song-title">${s.videoTitle}</div>
+                        <div class="score-info">
+                            <span>Score: ${s.finalScore}%</span>
+                            <span>Accuracy: ${s.averageAccuracy}%</span>
+                        </div>
                     </div>
+                    <span class="delete-score" data-score-id="${index}">🗑️</span>
                 </div>
             `)
             .join('');
@@ -91,28 +136,12 @@ class ScoreManager {
         const finalScore = document.getElementById('finalScore');
         const averageAccuracy = document.getElementById('averageAccuracy');
         const maxStreak = document.getElementById('maxStreak');
-        const scoreHistory = document.getElementById('scoreHistory');
 
         finalScore.textContent = `${score.finalScore}%`;
         averageAccuracy.textContent = score.averageAccuracy;
         maxStreak.textContent = score.maxStreak;
 
-        scoreHistory.innerHTML = this.loadScoreHistory()
-            .map(s => `
-                <div class="score-entry">
-                    <div class="score-info">
-                        <strong>${s.videoTitle}</strong>
-                        <div class="score-details">
-                            <span>Score: ${s.finalScore}%</span>
-                            <span>Accuracy: ${s.averageAccuracy}%</span>
-                        </div>
-                    </div>
-                    <div class="score-date">
-                        ${new Date(s.date).toLocaleDateString()}
-                    </div>
-                </div>
-            `).join('');
-
+        this.updateModalHistory();
         modal.style.display = 'block';
     }
 }
