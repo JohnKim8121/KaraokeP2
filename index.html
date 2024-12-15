@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Mixer App</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="container">
+        <!-- YouTube Section -->
+        <div class="youtube-section">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search YouTube videos...">
+                <button id="searchButton">Search</button>
+                <button id="voiceSearchButton">🎤</button>
+            </div>
+            <div id="searchResults"></div>
+            <div class="video-and-history">
+                <div class="video-container">
+                    <div id="videoPlayer"></div>
+                    <div class="youtube-controls">
+                        <button id="prevButton">Previous</button>
+                        <button id="playPauseButton">Play</button>
+                        <button id="nextButton">Next</button>
+                        <div class="volume-control">
+                            <label>YouTube Volume:</label>
+                            <input type="range" id="youtubeVolume" min="0" max="100" value="100">
+                        </div>
+                    </div>
+                </div>
+                <div class="score-history-panel">
+                    <h3>Your Performance History</h3>
+                    <div id="liveScoreHistory"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audio Controls Section -->
+        <div class="audio-controls">
+            <!-- Real-time Accuracy Section -->
+            <div class="accuracy-section">
+                <div class="accuracy-display">
+                    <div class="accuracy-meter">
+                        <div id="accuracyBar" class="accuracy-bar"></div>
+                    </div>
+                    <p class="accuracy-label">Accuracy: <span id="accuracyPercent">0</span>%</p>
+                </div>
+            </div>
+            <div class="mic-controls">
+                <button id="toggleMic">Enable Microphone</button>
+                <div class="volume-control">
+                    <label>Microphone Volume:</label>
+                    <input type="range" id="micVolume" min="0" max="100" value="100">
+                </div>
+            </div>
+            
+            <div class="effects-controls">
+                <div class="effect-control">
+                    <label>Reverb Mix:</label>
+                    <input type="range" id="reverbMix" min="0" max="100" value="50">
+                </div>
+                <div class="effect-control">
+                    <label>Filter Frequency:</label>
+                    <input type="range" id="filterFreq" min="20" max="20000" value="2000">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js" type="module"></script>
+    <script src="superpowered/superpowered.js" type="module"></script>
+    <script src="js/youtube-handler.js" type="module"></script>
+    <script src="js/audio-processor.js" type="module"></script>
+    <script src="js/main.js" type="module"></script>
+
+    <!-- Score Modal -->
+    <div id="scoreModal" class="modal">
+        <div class="modal-content">
+            <h2>Performance Summary</h2>
+            <div class="final-score">
+                <h3>Final Score: <span id="finalScore">0</span></h3>
+                <p>Average Accuracy: <span id="averageAccuracy">0</span>%</p>
+                <p>Max Streak: <span id="maxStreak">0</span></p>
+            </div>
+            <div class="recent-scores">
+                <h3>Recent Performances</h3>
+                <div id="scoreHistory"></div>
+            </div>
+            <button id="closeModal">Close</button>
+        </div>
+    </div>
+</body>
+</html> 

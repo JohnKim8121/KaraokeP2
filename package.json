@@ -1,0 +1,19 @@
+{
+  "name": "audio-mixer-app",
+  "version": "1.0.0",
+  "description": "Audio Mixer App with YouTube integration",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'No build step'",
+    "android": "npx cap open android",
+    "ios": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^4.0.0",
+    "@capacitor/core": "^4.0.0",
+    "@capacitor/ios": "^4.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^4.0.0"
+  }
+} 

@@ -1,0 +1,16 @@
+{
+  "appId": "com.yourdomain.audiomixer",
+  "appName": "Audio Mixer",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "Microphone": {
+      "android": {
+        "permissions": ["android.permission.RECORD_AUDIO"]
+      }
+    }
+  }
+} 
